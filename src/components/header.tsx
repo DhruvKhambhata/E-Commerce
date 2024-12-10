@@ -1,83 +1,70 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  Badge,
+import React, { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { 
+  AppBar, 
+  Toolbar, 
+  Typography, 
+  Button, 
+  IconButton, 
+  Drawer, 
+  List, 
+  ListItem, 
+  ListItemText, 
+  Badge, 
   InputBase,
   Box,
   useScrollTrigger,
   Slide,
-  styled,
-} from "@mui/material";
-import {
-  Menu as MenuIcon,
-  ShoppingCart,
+  styled
+} from '@mui/material';
+import { 
+  Menu as MenuIcon, 
+  ShoppingCart, 
   Search as SearchIcon,
   Close as CloseIcon,
   Add as AddIcon,
-  Remove as RemoveIcon,
-} from "@mui/icons-material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useRouter } from "next/navigation";
+  Remove as RemoveIcon
+} from '@mui/icons-material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#3f51b5",
+      main: '#3f51b5',
     },
     secondary: {
-      main: "#f50057",
+      main: '#f50057',
     },
   },
 });
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
+  color: 'inherit',
+  '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
       },
     },
   },
 }));
 
 const GradientBox = styled(Box)(({ theme }) => ({
-  height: "4px",
+  height: '4px',
   background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
 }));
 
 const initialCartItems = [
-  {
-    id: 1,
-    name: "Classic White T-Shirt",
-    price: 29.99,
-    quantity: 1,
-    image: "/placeholder.svg",
-  },
-  {
-    id: 2,
-    name: "Ceramic Coffee Mug",
-    price: 19.99,
-    quantity: 2,
-    image: "/placeholder.svg",
-  },
+  { id: 1, name: "Classic White T-Shirt", price: 29.99, quantity: 1, image: "/placeholder.svg" },
+  { id: 2, name: "Ceramic Coffee Mug", price: 19.99, quantity: 2, image: "/placeholder.svg" },
 ];
 
 function HideOnScroll(props: { children: React.ReactElement }) {
@@ -106,33 +93,18 @@ function Cart() {
     );
   };
 
-  const total = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <>
       <IconButton color="inherit" onClick={() => setDrawerOpen(true)}>
-        <Badge
-          badgeContent={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-          color="secondary"
-        >
+        <Badge badgeContent={cartItems.reduce((sum, item) => sum + item.quantity, 0)} color="secondary">
           <ShoppingCart />
         </Badge>
       </IconButton>
-      <Drawer
-        anchor="right"
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-      >
+      <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <Box sx={{ width: 350, p: 2 }}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            mb={2}
-          >
+          <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
             <Typography variant="h6">Your Cart</Typography>
             <IconButton onClick={() => setDrawerOpen(false)}>
               <CloseIcon />
@@ -146,24 +118,18 @@ function Cart() {
                   alt={item.name}
                   width={64}
                   height={64}
-                  style={{ borderRadius: "4px", marginRight: "16px" }}
+                  style={{ borderRadius: '4px', marginRight: '16px' }}
                 />
                 <ListItemText
                   primary={item.name}
                   secondary={`$${item.price.toFixed(2)}`}
                 />
                 <Box display="flex" alignItems="center">
-                  <IconButton
-                    size="small"
-                    onClick={() => updateQuantity(item.id, -1)}
-                  >
+                  <IconButton size="small" onClick={() => updateQuantity(item.id, -1)}>
                     <RemoveIcon fontSize="small" />
                   </IconButton>
                   <Typography mx={1}>{item.quantity}</Typography>
-                  <IconButton
-                    size="small"
-                    onClick={() => updateQuantity(item.id, 1)}
-                  >
+                  <IconButton size="small" onClick={() => updateQuantity(item.id, 1)}>
                     <AddIcon fontSize="small" />
                   </IconButton>
                 </Box>
@@ -174,12 +140,7 @@ function Cart() {
             <Typography variant="subtitle1" fontWeight="bold">
               Total: ${total.toFixed(2)}
             </Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              sx={{ mt: 2 }}
-            >
+            <Button variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
               Checkout
             </Button>
           </Box>
@@ -191,7 +152,7 @@ function Cart() {
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const router = useRouter();
+
   return (
     <ThemeProvider theme={theme}>
       <HideOnScroll>
@@ -201,7 +162,7 @@ export function Header() {
               edge="start"
               color="inherit"
               aria-label="menu"
-              sx={{ mr: 2, display: { sm: "none" } }}
+              sx={{ mr: 2, display: { sm: 'none' } }}
               onClick={() => setMobileMenuOpen(true)}
             >
               <MenuIcon />
@@ -213,48 +174,29 @@ export function Header() {
               href="/"
               sx={{
                 flexGrow: 1,
-                display: { xs: "none", sm: "block" },
-                textDecoration: "none",
-                color: "text.primary",
+                display: { xs: 'none', sm: 'block' },
+                textDecoration: 'none',
+                color: 'text.primary',
                 fontWeight: 700,
                 background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
               }}
             >
               StyleHub
             </Typography>
-            <Box sx={{ display: { xs: "none", sm: "block" } }}>
-              {["T-Shirts", "Mugs", "Jewelry"].map((text) => (
-                <Button
-                  type="button"
-                  key={text}
-                  onClick={() => router.push(`/category/${text.toLowerCase()}`)}
-                >
-                  {text}
-                </Button>
-              ))}
+            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+              <Button color="inherit" component={Link} href="/category/tshirts">T-Shirts</Button>
+              <Button color="inherit" component={Link} href="/category/mugs">Mugs</Button>
+              <Button color="inherit" component={Link} href="/category/jewelry">Jewelry</Button>
             </Box>
             <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Box
-                sx={{
-                  position: "relative",
-                  mr: 2,
-                  display: { xs: "none", sm: "block" },
-                }}
-              >
-                <SearchIcon
-                  sx={{
-                    position: "absolute",
-                    left: 8,
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                  }}
-                />
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ position: 'relative', mr: 2, display: { xs: 'none', sm: 'block' } }}>
+                <SearchIcon sx={{ position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)' }} />
                 <StyledInputBase
                   placeholder="Search…"
-                  inputProps={{ "aria-label": "search" }}
+                  inputProps={{ 'aria-label': 'search' }}
                 />
               </Box>
               <Cart />
@@ -274,19 +216,16 @@ export function Header() {
           onClick={() => setMobileMenuOpen(false)}
           onKeyDown={() => setMobileMenuOpen(false)}
         >
-          {["T-Shirts", "Mugs", "Jewelry"].map((text) => (
-            <button
-              type="button"
-              key={text}
-              onClick={() => router.push(`/category/${text.toLowerCase()}`)}
-            >
-              <ListItem component="a">
+          <List>
+            {['T-Shirts', 'Mugs', 'Jewelry'].map((text) => (
+              <ListItem key={text} component={Link} href={`/category/${text.toLowerCase()}`}>
                 <ListItemText primary={text} />
               </ListItem>
-            </button>
-          ))}
+            ))}
+          </List>
         </Box>
       </Drawer>
     </ThemeProvider>
   );
 }
+

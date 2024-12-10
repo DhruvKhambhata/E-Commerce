@@ -2,23 +2,17 @@
 
 import React from "react";
 import "./globals.css";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   CssBaseline,
   ThemeProvider,
-  createTheme,
   Box,
 } from "@mui/material";
 import { Header } from "../components/header";
 import { Footer } from "../components/footer";
+import { theme } from "./assets/theme";
 
-const theme = createTheme({
-  palette: {
-    mode: "light",
-    primary: {
-      main: "#1976d2",
-    },
-  },
-});
+
 
 const metadata = {
   title: "StyleHub - Fashion & Accessories",
@@ -26,6 +20,8 @@ const metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  
+  const queryClient = new QueryClient();  
   return (
     <html lang="en">
       <head>
@@ -35,6 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="description" content={metadata.description} />
       </head>
       <body>
+      <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Header />
@@ -43,6 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </Box>
           <Footer />
         </ThemeProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );
