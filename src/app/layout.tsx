@@ -8,8 +8,8 @@ import {
   ThemeProvider,
   Box,
 } from "@mui/material";
-import { Header } from "../components/header";
-import { Footer } from "../components/footer";
+import { Header } from "./components/header";
+import { Footer } from "./components/footer";
 import { theme } from "./assets/theme";
 
 
